@@ -1,0 +1,46 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: SpringCloudPay8084
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #com.alibaba.druid.pool.DruidDataSource为url，com.zaxxer.hikari.HikariDataSource为jdbcUrl
+      url: jdbc:mysql://106.53.217.86:3306/pay?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: Lzx1922026241@
+
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    instance-id: ${eureka.instance.hostname}:${spring.application.name}:${server.port}
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8080/eureka
+
+#tx-manager地址
+tx:
+  manager:
+    url: http://127.0.0.1:8899/tx/manager/
+
+# mybatis
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  typeAliasesPackage: com.lzx.lcn.pay.vo
+  global-config:
+    db-config:
+      id-type: AUTO
+      capital-mode: true
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
